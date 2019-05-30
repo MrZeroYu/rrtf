@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+<link href="../css/toefl.css" rel="stylesheet" type="text/css">
+<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/grouptype.js"></script>
+<script type="text/javascript"
+	src="http://localhost:8080/js/jquery-3.0.0.min.js"></script>
+<script type="text/javascript"
+	src="http://localhost:8080/js/bootstrap.min.js"></script>
+</head>
+	<body>
+		<div class="doc910 ">
+			<div class="flcb_cardMenu">
+				<ul>
+
+					<li class="on">
+						<a href="###" id="myJoin">我加入的群</a>
+					</li>
+				</ul>
+			</div>
+
+			<div id="myJoinContent">
+				<div class="flcb_myGroup">
+					<dl  th:each="group:${grouplist}">
+						<dt><a href="#"><img src="../i/82x82.png"></a></dt>
+						<dd>
+							<div class="flcb_myGroupClass">
+								<h6 th:text="${group.groupName}"><span th:text="${group.groupType}"></span></h6>
+								<div class="flcb_cardNum"><span th:text="${group.members}"></span>人购买</div>
+							<div class="flcb_myGroupTime">上课时间：<span>2015-10-29</span><span>12:30--15:30</span>群主：<span th:text="${group.teacher.realname}"></span></div>
+							<div class="flcb_myGroupText" th:text="${group.detail}"></div>
+							<div class="flcb_cardButton">
+								<a th:href="|chat?id=${group.groupId}&userId=${userId}|" target="_parent">进群聊天</a>
+								<a th:href="|find2?id=${group.groupId}&userId=${userId}|" target="_parent">群信息</a>
+								<a th:href="|delusr?usr=${userId}&groupId=${group.groupId}&userId=${userId}|">退出该群</a>
+							</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+				<div class="pageList">
+					<ul >
+						<li><a th:each="no:${#numbers.sequence(1,grouplist.totalPages)}" th:href="'localhost:8080/group/mygroup'+'?userId='+${userId}+'&no='+${no-1}" th:text="${no}+' '">1</a></li>
+						<li><a th:href="'localhost:8080/group/mygroup'+'?userId='+${userId}+'&no='+${grouplist.totalPages-1}">最后一页</a></li>
+						<li><a th:if="${no!=0}" th:href="'localhost:8080/group/mygroup'+'?userId='+${userId}+'&no='+${no-1}" class="pret">上一页</a></li>
+						<li><a th:if="${no!=grouplist.totalPages-1}" th:href="'localhost:8080/group/mygroup'+'?userId='+${userId}+'&no='+${no+1}" class="next">下一页</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
